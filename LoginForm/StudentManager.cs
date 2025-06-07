@@ -26,6 +26,7 @@ namespace LoginForm
 
         private void StudentManager_Load(object sender, EventArgs e)
         {
+            GC.Collect();
             this.MdiParent = Globals.parentForm;
             this.Dock = DockStyle.Fill;
 
@@ -77,6 +78,8 @@ namespace LoginForm
             DBHelper.FilterTable(studentTable, filterText, dgvStudents, ref dv);
         }
 
+
+        //Used to  check if certain codes exist or not
         private void dgvStudents_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             const int columnIndex1 = 3;
@@ -109,6 +112,13 @@ namespace LoginForm
            }
 
             
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            HomeScreen homeScreen = new HomeScreen();
+            homeScreen.Show();
+            this.Close();
         }
     }
 

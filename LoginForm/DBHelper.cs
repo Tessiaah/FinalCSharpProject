@@ -54,15 +54,53 @@ namespace LoginForm
             }
         }
 
-
-        public static void FilterTable(DataTable studentTable, string filterText, DataGridView dgvStudents, ref DataView dv)
+        public static void FillParentTable(ref DataTable parentTable, ref DataGridView dgvParents, ref OleDbDataAdapter adapter, ref OleDbCommandBuilder builder, ref OleDbConnection conn)
         {
-            dv = new DataView(studentTable);
+            string query = "SELECT * FROM EncEdu";
+            try
+            {
+                conn = new OleDbConnection(connString);
+                conn.Open();
+                adapter = new OleDbDataAdapter(query, conn);
+                builder = new OleDbCommandBuilder(adapter);
+                adapter.Fill(parentTable);
+                dgvParents.DataSource = parentTable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static void FillCourseTable(ref DataTable courseTable, ref DataGridView dgvCourses, ref OleDbDataAdapter adapter, ref OleDbCommandBuilder builder, ref OleDbConnection conn)
+        {
+            string query = "SELECT * FROM Cursos";
+            try
+            {
+                conn = new OleDbConnection(connString);
+                conn.Open();
+                adapter = new OleDbDataAdapter(query, conn);
+                builder = new OleDbCommandBuilder(adapter);
+                adapter.Fill(courseTable);
+                dgvCourses.DataSource = courseTable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
+
+
+        public static void FilterTable(DataTable dataTable, string filterText, DataGridView dgvGridView, ref DataView dv)
+        {
+            dv = new DataView(dataTable);
             if (filterText != null)
             {
                 dv.RowFilter = $"Nome LIKE '{filterText}%'";            
             }
-            dgvStudents.DataSource = dv;
+            dgvGridView.DataSource = dv;
         }
 
 
@@ -80,6 +118,44 @@ namespace LoginForm
                     {
                         return reader.HasRows;
                     }
+                }
+            }
+        }
+
+        public static void UpdateStudentsOnParentDeletion(DataTable parentTable, OleDbConnection conn)
+        {
+            string query = "UPDATE Alunos SET CodEE = NULL WHERE CodEE = ?";
+
+            foreach (DataRow row in parentTable.Rows)
+            {
+                if (row.RowState == DataRowState.Deleted)
+                {
+                    var deletedCode = row["CodEE", DataRowVersion.Original];
+                    using (OleDbCommand cmd =  new OleDbCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@CodEE", deletedCode);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+            }
+        }
+
+        public static void UpdateStudentsOnCourseDeletion(DataTable courseTable, OleDbConnection conn)
+        {
+            string query = "UPDATE Alunos SET CodCurso = NULL WHERE CodCurso = ?";
+
+            foreach (DataRow row in courseTable.Rows)
+            {
+                if (row.RowState == DataRowState.Deleted)
+                {
+                    var deletedCode = row["CodCurso", DataRowVersion.Original];
+                    using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@CodCurso", deletedCode);
+                        cmd.ExecuteNonQuery();
+                    }
+
                 }
             }
         }

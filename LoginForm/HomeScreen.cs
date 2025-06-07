@@ -19,6 +19,7 @@ namespace LoginForm
 
         private void HomeScreen_Load(object sender, EventArgs e)
         {
+            GC.Collect();
             this.MdiParent = Globals.parentForm;
             this.Dock = DockStyle.Fill;
         }
@@ -27,6 +28,28 @@ namespace LoginForm
         {
             StudentManager stdManager = new StudentManager();
             stdManager.Show();
+            this.Close();
+        }
+
+        private void btnEE_Click(object sender, EventArgs e)
+        {
+            ParentManager parentManager = new ParentManager();
+            parentManager.Show();
+            this.Close();
+        }
+
+        private void btnCursos_Click(object sender, EventArgs e)
+        {
+            CourseManager courseManager = new CourseManager();
+            courseManager.Show();
+            this.Close();
+            
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            Form1 frm = new Form1();
+            frm.Show();
             this.Close();
         }
     }

@@ -25,7 +25,9 @@ namespace LoginForm
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            GC.Collect();
+            this.MdiParent = Globals.parentForm;
+            this.Dock = DockStyle.Fill;
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -32,6 +32,7 @@
             this.btnEE = new System.Windows.Forms.Button();
             this.btnCursos = new System.Windows.Forms.Button();
             this.btnInsc = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnAlunos
@@ -58,6 +59,7 @@
             this.btnEE.TabIndex = 8;
             this.btnEE.Text = "Gestão de E.E";
             this.btnEE.UseVisualStyleBackColor = false;
+            this.btnEE.Click += new System.EventHandler(this.btnEE_Click);
             // 
             // btnCursos
             // 
@@ -70,6 +72,7 @@
             this.btnCursos.TabIndex = 9;
             this.btnCursos.Text = "Gestão de Cursos";
             this.btnCursos.UseVisualStyleBackColor = false;
+            this.btnCursos.Click += new System.EventHandler(this.btnCursos_Click);
             // 
             // btnInsc
             // 
@@ -83,6 +86,22 @@
             this.btnInsc.Text = "Área de Admin";
             this.btnInsc.UseVisualStyleBackColor = false;
             // 
+            // btnBack
+            // 
+            this.btnBack.BackColor = System.Drawing.Color.Transparent;
+            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBack.Font = new System.Drawing.Font("Press Start 2P", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.ForeColor = System.Drawing.Color.DimGray;
+            this.btnBack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBack.Location = new System.Drawing.Point(122, 113);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(131, 33);
+            this.btnBack.TabIndex = 11;
+            this.btnBack.Text = "< Voltar";
+            this.btnBack.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBack.UseVisualStyleBackColor = false;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // HomeScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -91,6 +110,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1264, 712);
             this.ControlBox = false;
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnInsc);
             this.Controls.Add(this.btnCursos);
             this.Controls.Add(this.btnEE);
@@ -112,5 +132,6 @@
         private System.Windows.Forms.Button btnEE;
         private System.Windows.Forms.Button btnCursos;
         private System.Windows.Forms.Button btnInsc;
+        private System.Windows.Forms.Button btnBack;
     }
 }

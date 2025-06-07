@@ -11,28 +11,28 @@ using System.Windows.Forms;
 
 namespace LoginForm
 {
-    public partial class ParentManager : Form
+    public partial class CourseManager : Form
     {
-        private DataTable parentTable = new DataTable();
+        private DataTable courseTable = new DataTable();
         private OleDbDataAdapter adapter;
         private OleDbCommandBuilder builder;
         private OleDbConnection connection;
         private DataView dv;
 
-        public ParentManager()
+        public CourseManager()
         {
             InitializeComponent();
         }
 
-        private void ParentManager_Load(object sender, EventArgs e)
+        private void CourseManager_Load(object sender, EventArgs e)
         {
             GC.Collect();
             this.MdiParent = Globals.parentForm;
             this.Dock = DockStyle.Fill;
 
-            DBHelper.FillParentTable(ref parentTable, ref dgvParents, ref adapter, ref builder, ref connection);
-            dgvParents.Columns[0].ReadOnly = true;
-            dgvParents.DataError += dgvParents_DataError;
+            DBHelper.FillCourseTable(ref courseTable, ref dgvCourses, ref adapter, ref builder, ref connection);
+            dgvCourses.Columns[0].ReadOnly = true;
+            dgvCourses.DataError += dgvCourses_DataError;
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -40,15 +40,15 @@ namespace LoginForm
             try
             {
                 //Ensures there are no referential integrity issues with the student table
-                DBHelper.UpdateStudentsOnParentDeletion(parentTable, connection);
+                DBHelper.UpdateStudentsOnCourseDeletion(courseTable, connection);
 
                 //Sends the Updates to the database
-                adapter.Update(parentTable);
+                adapter.Update(courseTable);
 
                 //Refreshes the view for the user
-                parentTable.Clear();
-                adapter.Fill(parentTable);
-                dgvParents.DataSource = parentTable;
+                courseTable.Clear();
+                adapter.Fill(courseTable);
+                dgvCourses.DataSource = courseTable;
                 MessageBox.Show("Sucesso!");
 
             }
@@ -61,10 +61,10 @@ namespace LoginForm
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filterText = txtFilter.Text;
-            DBHelper.FilterTable(parentTable, filterText, dgvParents, ref dv);
+            DBHelper.FilterTable(courseTable, filterText, dgvCourses, ref dv);
         }
 
-        private void dgvParents_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void dgvCourses_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             if (e.Exception != null)
             {
@@ -79,6 +79,4 @@ namespace LoginForm
             this.Close();
         }
     }
-
-
 }
