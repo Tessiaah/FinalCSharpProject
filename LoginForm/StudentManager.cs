@@ -30,7 +30,7 @@ namespace LoginForm
             this.MdiParent = Globals.parentForm;
             this.Dock = DockStyle.Fill;
 
-            DBHelper.FillTable(ref studentTable, ref dgvStudents, ref adapter,ref builder, ref connection);
+            DBHelper.FillTable(studentTable, ref dgvStudents, ref adapter,ref builder, ref connection);
             dgvStudents.Columns[0].ReadOnly = true;
             dgvStudents.DataError += dgvStudents_DataError;
             dgvStudents.CellValidating += dgvStudents_CellValidating;
@@ -87,7 +87,14 @@ namespace LoginForm
 
            if (e.ColumnIndex == columnIndex1  || e.ColumnIndex == columnIndex2)
            {
-                int indexValue = int.Parse(e.FormattedValue.ToString());
+                string indexValue = e.FormattedValue.ToString();
+
+                if (string.IsNullOrWhiteSpace(indexValue))
+                {
+                    return;
+                                         
+                }
+                    
                 switch (e.ColumnIndex)
                 {
                     case columnIndex1:
@@ -116,9 +123,7 @@ namespace LoginForm
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            HomeScreen homeScreen = new HomeScreen();
-            homeScreen.Show();
-            this.Close();
+            FormHelper.BackFormChanger(this);
         }
     }
 

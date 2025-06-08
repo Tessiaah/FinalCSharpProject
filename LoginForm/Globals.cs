@@ -9,5 +9,6 @@ namespace LoginForm
     internal class Globals
     {
         public static Container parentForm;
+        public static string UserType;
     }
 }

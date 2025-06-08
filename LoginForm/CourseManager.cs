@@ -30,7 +30,7 @@ namespace LoginForm
             this.MdiParent = Globals.parentForm;
             this.Dock = DockStyle.Fill;
 
-            DBHelper.FillCourseTable(ref courseTable, ref dgvCourses, ref adapter, ref builder, ref connection);
+            DBHelper.FillCourseTable(courseTable, ref dgvCourses, ref adapter, ref builder, ref connection);
             dgvCourses.Columns[0].ReadOnly = true;
             dgvCourses.DataError += dgvCourses_DataError;
         }
@@ -74,9 +74,7 @@ namespace LoginForm
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            HomeScreen homeScreen = new HomeScreen();
-            homeScreen.Show();
-            this.Close();
+            FormHelper.BackFormChanger(this);
         }
     }
 }

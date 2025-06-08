@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminManager.Designer.cs">
+      <DependentUpon>AdminManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Container.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,12 +71,19 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormHelper.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="HomeScreen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HomeScreen.Designer.cs">
       <DependentUpon>HomeScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HomeScreenBasic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HomeScreenBasic.Designer.cs">
+      <DependentUpon>HomeScreenBasic.cs</DependentUpon>
     </Compile>
     <Compile Include="ParentManager.cs">
       <SubType>Form</SubType>
@@ -87,6 +100,9 @@
     <Compile Include="StudentManager.Designer.cs">
       <DependentUpon>StudentManager.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AdminManager.resx">
+      <DependentUpon>AdminManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Container.resx">
       <DependentUpon>Container.cs</DependentUpon>
     </EmbeddedResource>
@@ -98,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HomeScreen.resx">
       <DependentUpon>HomeScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HomeScreenBasic.resx">
+      <DependentUpon>HomeScreenBasic.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ParentManager.resx">
       <DependentUpon>ParentManager.cs</DependentUpon>
@@ -132,6 +151,7 @@
   <ItemGroup>
     <Content Include="Assets\AccessUIFinalSubMain.png" />
     <Content Include="Assets\C#HomePage.png" />
+    <Content Include="Assets\C#UBasicI.png" />
     <Content Include="Assets\C#UI.png" />
     <Content Include="Assets\filter.png" />
     <Content Include="Assets\HomeButton.png" />

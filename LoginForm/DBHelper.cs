@@ -15,28 +15,35 @@ namespace LoginForm
     {
         private static string connString = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source=C:\\Users\\ivand\\Folders\\School\\Coding\\FinalC#Project\\LoginForm\\TPProjectDB.accdb;Persist Security Info=False";
 
-        public static bool CheckLogin(string username, string password)
+        public static string CheckLogin(string username, string password)
         {
-            string query = "SELECT * FROM Logins WHERE Username = ?  AND Password = ?";
+            string query = "SELECT * FROM Logins WHERE Nome = ?  AND Pass = ?";
 
             using (OleDbConnection conn = new OleDbConnection(connString))
             {
                 conn.Open();
                 using (OleDbCommand command = new OleDbCommand(query, conn))
                 {
-                    command.Parameters.AddWithValue("@Username", username);
-                    command.Parameters.AddWithValue("@Password", password);
+                    command.Parameters.AddWithValue("@Nome", username);
+                    command.Parameters.AddWithValue("@Pass", password);
 
                     using (OleDbDataReader reader = command.ExecuteReader())
-                    {
-                        return reader.HasRows;
+                    {                       
+                        if(reader.Read())
+                        {
+                            return reader["AccessLevel"].ToString();
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
                 }
             }
         }
 
 
-        public static void FillTable(ref DataTable studentTable, ref DataGridView dgvStudents, ref OleDbDataAdapter adapter, ref OleDbCommandBuilder builder, ref OleDbConnection conn)
+        public static void FillTable(DataTable studentTable, ref DataGridView dgvStudents, ref OleDbDataAdapter adapter, ref OleDbCommandBuilder builder, ref OleDbConnection conn)
         {
             string query = "SELECT * FROM Alunos";
             try
@@ -54,7 +61,7 @@ namespace LoginForm
             }
         }
 
-        public static void FillParentTable(ref DataTable parentTable, ref DataGridView dgvParents, ref OleDbDataAdapter adapter, ref OleDbCommandBuilder builder, ref OleDbConnection conn)
+        public static void FillParentTable(DataTable parentTable, ref DataGridView dgvParents, ref OleDbDataAdapter adapter, ref OleDbCommandBuilder builder, ref OleDbConnection conn)
         {
             string query = "SELECT * FROM EncEdu";
             try
@@ -72,7 +79,7 @@ namespace LoginForm
             }
         }
 
-        public static void FillCourseTable(ref DataTable courseTable, ref DataGridView dgvCourses, ref OleDbDataAdapter adapter, ref OleDbCommandBuilder builder, ref OleDbConnection conn)
+        public static void FillCourseTable(DataTable courseTable, ref DataGridView dgvCourses, ref OleDbDataAdapter adapter, ref OleDbCommandBuilder builder, ref OleDbConnection conn)
         {
             string query = "SELECT * FROM Cursos";
             try
@@ -83,6 +90,24 @@ namespace LoginForm
                 builder = new OleDbCommandBuilder(adapter);
                 adapter.Fill(courseTable);
                 dgvCourses.DataSource = courseTable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static void FillAdminTable(DataTable adminTable, ref DataGridView dgvAdmins, ref OleDbDataAdapter adapter, ref OleDbCommandBuilder builder, ref OleDbConnection conn)
+        {
+            string query = "SELECT * FROM Logins";
+            try
+            {
+                conn = new OleDbConnection(connString);
+                conn.Open();
+                adapter = new OleDbDataAdapter(query, conn);
+                builder = new OleDbCommandBuilder(adapter);
+                adapter.Fill(adminTable);
+                dgvAdmins.DataSource = adminTable;
             }
             catch (Exception ex)
             {
@@ -104,7 +129,7 @@ namespace LoginForm
         }
 
 
-        public static bool CheckIfExistsParent(int value)
+        public static bool CheckIfExistsParent(string value)
         {
             string query = "SELECT * FROM EncEdu WHERE CodEE = ?";
 
@@ -160,7 +185,7 @@ namespace LoginForm
             }
         }
 
-        public static bool CheckIfExistsCourse(int value)
+        public static bool CheckIfExistsCourse(string value)
         {
             string query = "SELECT * FROM Cursos WHERE CodCurso = ?";
 
@@ -170,6 +195,26 @@ namespace LoginForm
                 using (OleDbCommand command = new OleDbCommand(query, conn))
                 {
                     command.Parameters.AddWithValue("@CodCurso", value);
+                    using (OleDbDataReader reader = command.ExecuteReader())
+                    {
+                        return reader.HasRows;
+                    }
+                }
+            }
+        }
+
+        public static bool CheckUsernameExists(string username)
+        {
+            string query = "SELECT * FROM Logins WHERE Nome = ?";
+
+            using (OleDbConnection conn = new OleDbConnection(connString))
+            {
+                conn.Open();
+
+                using (OleDbCommand command = new OleDbCommand(query, conn))
+                {
+                    command.Parameters.AddWithValue("@Nome", username);
+
                     using (OleDbDataReader reader = command.ExecuteReader())
                     {
                         return reader.HasRows;

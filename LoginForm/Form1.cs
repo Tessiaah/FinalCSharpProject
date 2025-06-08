@@ -38,26 +38,34 @@ namespace LoginForm
                 username = txtUsername.Text;
                 password = txtPassword.Text;
             }
-           
-            
+
             try
             {
-                if(DBHelper.CheckLogin(username, password))
+                Globals.UserType = DBHelper.CheckLogin(username, password);
+                if(Globals.UserType == "Kernel")
                 {
-                    HomeScreen homeScreen = new HomeScreen(); 
+                    HomeScreen homeScreen = new HomeScreen();
                     homeScreen.Show();
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Nada Encontrado");
+                    if(Globals.UserType == "Basic")
+                    {
+                        HomeScreenBasic homeScreenBasic = new HomeScreenBasic();
+                        homeScreenBasic.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Utilizador não existente!");
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-           
         }
 
     }

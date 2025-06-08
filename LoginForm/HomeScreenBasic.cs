@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace LoginForm
 {
-    public partial class HomeScreen : Form
+    public partial class HomeScreenBasic : Form
     {
-        public HomeScreen()
+        public HomeScreenBasic()
         {
             InitializeComponent();
         }
 
-        private void HomeScreen_Load(object sender, EventArgs e)
+        private void HomeScreenBasic_Load(object sender, EventArgs e)
         {
             GC.Collect();
             this.MdiParent = Globals.parentForm;
@@ -43,19 +43,11 @@ namespace LoginForm
             CourseManager courseManager = new CourseManager();
             courseManager.Show();
             this.Close();
-            
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
             FormHelper.LoginBackChanger(this);
-        }
-
-        private void btnInsc_Click(object sender, EventArgs e)
-        {
-            AdminManager adminManager = new AdminManager();
-            adminManager.Show();
-            this.Close();
         }
     }
 }
